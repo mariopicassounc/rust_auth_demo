@@ -1,4 +1,4 @@
-# Installation
+# Rust auth tutorial
 ## To start a project like this
 
 ### Setup diesel ORM
@@ -95,3 +95,70 @@ use my_database_name;
 DESCRIBE users;
 DESCRIBE sessions;
 ~~~
+
+## Authentication
+### JWT
+Conceptual video: https://www.youtube.com/watch?v=soGRyl9ztjI
+
+Deep dive how it works: https://www.youtube.com/watch?v=_XbXkVdoG_0
+
+The server sign with his private key a JSON Web Token and send it to the client.
+
+https://jwt.io to decode jwt
+
+The JWT has three parts (the three are encoded each one in base64):
+
+Header: cryptography algotithm
+~~~
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+~~~
+
+Payload: info about the client 
+~~~
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+~~~
+Signature: the server sign with his private key the payload and the header.
+~~~
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  server-256-bit-secret
+)
+~~~
+
+The client stores the JWT in LocalStorage for example.
+Then sends it in the header of all the requests to the server.
+
+The server:
+    result = hash(
+        base64UrlEncode(header) + "." +
+        base64UrlEncode(payload),
+        server-256-bit-secret
+    )
+
+So, if the result equals to the signature of the JWT it's OK, it's a authenticated request.
+
+## Authorization
+### OAuth
+
+Access delegation
+
+Conceptual video: https://www.youtube.com/watch?v=t4-416mg6iU
+
+Deep dive how it works: https://www.youtube.com/watch?v=3pZ3Nh8tgTE
+
+#### Terms 
+Protected Resource: We allow access of these resources to a third-party
+Resource Owner: The person using the apps
+Resource Server and Authorization Server: Google or Facebook commonly
+Client: The app that needs the protected resources of other server
+
+
+
