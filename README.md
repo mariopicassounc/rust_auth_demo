@@ -64,3 +64,5 @@ And run diesel-cli to connect:
 ~~~
 diesel setup
 ~~~
+
+If the last command succeed congrats. You have connected to the mysql container.
