@@ -10,11 +10,3 @@ CREATE TABLE users (
 -- Add unique constraints to the username and email columns
 ALTER TABLE users ADD CONSTRAINT unique_username UNIQUE (username);
 ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
-
-CREATE TABLE sessions (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
