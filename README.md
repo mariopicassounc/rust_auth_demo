@@ -3,6 +3,7 @@
 
 ### Setup diesel ORM
 
+#### Create project
 ~~~
 cargo new --lib <namefolder>
 cd <namefolder>
@@ -15,7 +16,7 @@ diesel = { version = "2.1.0", features = ["mysql"] }
 dotenvy = "0.15"
 ~~~
 
-Then install the CLI tool
+#### Install the CLI tool
 ~~~
 cargo install diesel_cli
 ~~~
@@ -36,7 +37,7 @@ cargo install diesel_cli --no-default-features --features mysql
 ~~~
 
 
-We will use MySQL official docker image
+#### MySQL official docker image.
 
 ~~~
 docker pull mysql
@@ -66,3 +67,31 @@ diesel setup
 ~~~
 
 If the last command succeed congrats. You have connected to the mysql container.
+
+#### Create the tables in the MySQL DB using migrations.
+
+~~~
+diesel migration generate create_users
+~~~
+
+In migrations folder there are the up.sql and down.sql files and the tables are created in up.sql
+
+With down.sql we can delete the tables.
+
+We can apply our new migration:
+
+~~~
+diesel migration run
+~~~
+
+#### Check the tables in the container.
+~~~
+docker exec -it my_mysql_container mysql -uroot -p
+~~~
+Then in the mysql promt:
+~~~
+SHOW DATABASES;
+use my_database_name;
+DESCRIBE users;
+DESCRIBE sessions;
+~~~
